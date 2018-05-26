@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package co.com.examen.AppExamen.controller;
+import co.com.examen.AppExamen.business.IMovimientoBusiness;
 import co.com.examen.AppExamen.business.IProductoBusiness;
+import co.com.examen.AppExamen.model.Movimiento;
 import co.com.examen.AppExamen.model.Producto;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/")
-public class ProductoController {
+public class Controller {
     @Autowired
     private IProductoBusiness productoBusiness;
+    private IMovimientoBusiness movimientoBusiness;
     
     @GetMapping("/producto")
     public List<Producto> obtenerProductos(HttpServletResponse hsr){
@@ -52,4 +55,35 @@ public class ProductoController {
     return productoBusiness.modificarTProducto(producto);
     
     }
+    
+    @GetMapping("/movimiento")
+    public List<Movimiento> obtenerMovimientos(HttpServletResponse hsr){
+        return movimientoBusiness.obtenerMovimientos();
+    }
+    
+    @GetMapping("/movimiento/{idmovimiento}")
+    public Movimiento obtenerMovimiento(@PathVariable String idmovimiento,
+                                        HttpServletResponse hsr) {
+    return movimientoBusiness.obtenerMovimiento(idmovimiento);
+    }
+    
+     @PostMapping("/movimiento")
+    public String crearMovimiento(@RequestBody Movimiento movimiento,
+                                    HttpServletResponse hsr){
+    return movimientoBusiness.crearMovimiento(movimiento);
+    }
+    
+    @PutMapping("/movimiento")
+    public String modificarMovimiento(@RequestBody Movimiento movimiento,
+                                      HttpServletResponse hsr){
+    return movimientoBusiness.modificarMovimiento(movimiento);
+    
+    }
+    
+    @DeleteMapping("/movimiento")
+    public String eliminarMovimiento(@RequestBody Movimiento movimiento,
+                                    HttpServletResponse hsr){
+    return movimientoBusiness.eliminarMovimiento(movimiento.getIdMovimiento());
+    }
+    
 }

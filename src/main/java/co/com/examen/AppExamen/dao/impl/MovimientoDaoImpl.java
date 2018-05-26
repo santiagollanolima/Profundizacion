@@ -105,7 +105,11 @@ public class MovimientoDaoImpl implements IMovimientoDao {
 
     @Override
     public String modificarMovimiento(Movimiento movimiento) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String respuesta = "Movimiento Actualizado";
+        List<Movimiento> listado = MovimientoData.getListado();
+        listado.set(listado.indexOf(movimiento), movimiento);
+        MovimientoData.setListado(listado);
+        return respuesta;
     }
 
 }
